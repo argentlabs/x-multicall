@@ -1,0 +1,33 @@
+{
+  "name": "x-multicall",
+  "module": "dist/esm/index.ts",
+  "types": "dist/types/index.d.ts",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "default": "./dist/esm/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "starknet": "^5.19.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "bun run build --watch",
+    "build": "bun run build:esm && bun run build:types",
+    "build:esm": "bun build --format esm --outdir dist/esm --sourcemap=external ./src/index.ts",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --outDir dist/types ./src/index.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "devnet": "docker run -p 5050:5050 shardlabs/starknet-devnet-rs:latest-seed0"
+  },
+  "dependencies": {
+    "dataloader": "^2.2.2"
+  }
+}
