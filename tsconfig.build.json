@@ -1,0 +1,12 @@
+// tsconfig extends tsconfig.json
+{
+  "extends": "./tsconfig.json",
+
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "./src"
+  },
+
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "build", "dist", "./src/**/*.test.ts"]
+}

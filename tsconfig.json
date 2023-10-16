@@ -11,6 +11,7 @@
     "strict": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,

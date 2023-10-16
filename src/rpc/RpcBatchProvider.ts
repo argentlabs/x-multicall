@@ -1,7 +1,6 @@
 import DataLoader from "dataloader";
-import { RpcProvider, RpcProviderOptions, RPC } from "starknet"; // Import your RPC types
-
-import { DataLoaderOptions } from "../dataloader";
+import { RpcProvider, type RpcProviderOptions, type RPC } from "starknet";
+import type { DataLoaderOptions } from "../types";
 
 type RpcRequest<T extends keyof RPC.Methods = keyof RPC.Methods> = {
   method: T;
