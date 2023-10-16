@@ -6,7 +6,7 @@ import {
   transaction,
   CallData,
 } from "starknet";
-import type { MinimalProviderInterface } from "./types";
+import type { MinimalProviderInterface } from "../types";
 
 const partitionResponses = (responses: string[]): string[][] => {
   if (responses.length === 0) {
@@ -23,13 +23,15 @@ const partitionResponses = (responses: string[]): string[][] => {
 
 const extractErrorCallIndex = (e: Error) => {
   try {
-    const errorCallIndex = (e as any)
-      .toString()
-      .match(/Error message: multicall (\d+) failed/)?.[1];
-    if (errorCallIndex === undefined) {
-      throw e;
+    const errorCallText = e.toString();
+
+    const sequencerErrorIndex = errorCallText.match(
+      /Error message: multicall (\d+) failed/
+    )?.[1];
+    if (sequencerErrorIndex) {
+      return Number(sequencerErrorIndex);
     }
-    return parseInt(errorCallIndex, 10);
+    throw e;
   } catch {
     throw e;
   }
@@ -83,6 +85,7 @@ export const aggregate = async (
     }
 
     if (
+      // in case multicall contract is not deployed, fallback to calling each call separately
       (e instanceof GatewayError &&
         e.errorCode === "StarknetErrorCode.UNINITIALIZED_CONTRACT") || // Sequencer
       (e instanceof LibraryError && e.message === "20: Contract not found") // RPC

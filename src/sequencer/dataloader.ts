@@ -2,12 +2,7 @@ import DataLoader from "dataloader";
 import { type Call, CallData, hash, num } from "starknet";
 
 import { aggregate } from "./aggregate";
-import type { MinimalProviderInterface } from "./types";
-
-export interface DataLoaderOptions {
-  maxBatchSize?: number;
-  batchInterval?: number;
-}
+import type { DataLoaderOptions, MinimalProviderInterface } from "../types";
 
 export const getDataLoader = (
   provider: MinimalProviderInterface,

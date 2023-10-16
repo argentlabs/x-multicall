@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from "bun:test";
-import { Multicall } from "./index";
-import { MinimalProviderInterface } from "./types";
+import { SequencerBatchProvider } from "./index";
+import { MinimalProviderInterface } from "../types";
 
 function getMockProvider(responses: string[][]): MinimalProviderInterface {
   const blockNumber = "0x1";
@@ -16,10 +16,10 @@ function getMockProvider(responses: string[][]): MinimalProviderInterface {
   };
 }
 
-describe("Multicall", () => {
+describe("SequencerBatchProvider", () => {
   test("should return the correct result for one call", async () => {
     const provider = getMockProvider([["0x1337"]]);
-    const mc = new Multicall(provider);
+    const mc = new SequencerBatchProvider(provider);
 
     const { result } = await mc.callContract({
       contractAddress: "0x1",
@@ -38,7 +38,7 @@ describe("Multicall", () => {
       ["0x1339"],
       ["0x133a"],
     ]);
-    const mc = new Multicall(provider);
+    const mc = new SequencerBatchProvider(provider);
 
     const responses = await Promise.all(
       new Array(4).fill(null).map((_, i) =>
