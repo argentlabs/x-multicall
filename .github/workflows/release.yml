@@ -22,6 +22,8 @@ jobs:
       - run: bun install
       - run: bun run build
       - run: bun run test
+        env:
+          TEST_RPC_PROVIDER: ${{ vars.TEST_RPC_PROVIDER }}
 
       # - name: semantic-release
       #   run: npx semantic-release --debug true --dry-run false
