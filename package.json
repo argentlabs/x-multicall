@@ -1,6 +1,6 @@
 {
   "name": "@argent/x-multicall",
-  "version": "7.0.0",
+  "version": "1.0.0",
   "repository": "github:argentlabs/x-multicall.git",
   "private": false,
   "license": "MIT",
