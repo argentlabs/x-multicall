@@ -21,26 +21,6 @@ exports[`SequencerBatchProvider one call fails in a batch 1`] = `
     },
   },
   {
-    "reason": [GatewayError: Error at pc=0:25:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:128)
-Unknown location (pc=0:68)
-Unknown location (pc=0:160)
-Unknown location (pc=0:199)
-Unknown location (pc=0:199)
-Error message: multicall 2 failed
-Unknown location (pc=0:177)
-
-Error in the called contract (0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7):
-Error at pc=0:104:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:1678)
-Unknown location (pc=0:1664)
-
-Error in the called contract (0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7):
-Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 not found in contract with class hash 0x2760f25d5a4fb2bdde5f561fd0b44a3dee78c28903577d37d669939d97036a0.],
     "status": "rejected",
   },
   {
@@ -58,24 +38,6 @@ Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 no
 exports[`SequencerBatchProvider two call fails in a batch 1`] = `
 [
   {
-    "reason": [GatewayError: Error at pc=0:25:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:128)
-Unknown location (pc=0:68)
-Unknown location (pc=0:160)
-Error message: multicall 0 failed
-Unknown location (pc=0:177)
-
-Error in the called contract (0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8):
-Error at pc=0:105:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:1683)
-Unknown location (pc=0:1669)
-
-Error in the called contract (0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8):
-Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 not found in contract with class hash 0x2760f25d5a4fb2bdde5f561fd0b44a3dee78c28903577d37d669939d97036a0.],
     "status": "rejected",
   },
   {
@@ -88,25 +50,6 @@ Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 no
     },
   },
   {
-    "reason": [GatewayError: Error at pc=0:25:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:128)
-Unknown location (pc=0:68)
-Unknown location (pc=0:160)
-Unknown location (pc=0:199)
-Error message: multicall 1 failed
-Unknown location (pc=0:177)
-
-Error in the called contract (0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8):
-Error at pc=0:105:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:1683)
-Unknown location (pc=0:1669)
-
-Error in the called contract (0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8):
-Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 not found in contract with class hash 0x2760f25d5a4fb2bdde5f561fd0b44a3dee78c28903577d37d669939d97036a0.],
     "status": "rejected",
   },
   {
