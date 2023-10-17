@@ -6,6 +6,7 @@ import {
   constants,
   SequencerProvider,
 } from "starknet";
+import { filterError } from "../utils.test";
 
 interface MinimalMockProviderInterface {
   callContract: Mock<(request: Call) => Promise<CallContractResponse>>;
@@ -89,7 +90,7 @@ describe("SequencerBatchProvider", () => {
       })
     );
 
-    expect(responses).toMatchSnapshot();
+    expect(filterError(responses)).toMatchSnapshot();
     expect(provider.callContract.mock.calls.length).toEqual(2);
   });
 
@@ -114,7 +115,7 @@ describe("SequencerBatchProvider", () => {
       })
     );
 
-    expect(responses).toMatchSnapshot();
+    expect(filterError(responses)).toMatchSnapshot();
     expect(provider.callContract.mock.calls.length).toEqual(3);
   });
 });

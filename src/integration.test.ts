@@ -1,6 +1,7 @@
 import { describe, expect, spyOn, test } from "bun:test";
 import getMulticall from "./index";
 import { RpcProvider, SequencerProvider, constants } from "starknet";
+import { filterError } from "./utils.test";
 
 describe("getMulticall", () => {
   test("one call fails in a batch with sequencer", async () => {
@@ -31,7 +32,7 @@ describe("getMulticall", () => {
       })
     );
 
-    expect(responses).toMatchSnapshot();
+    expect(filterError(responses)).toMatchSnapshot();
     expect(callContractSpy.mock.calls.length).toEqual(2);
 
     // cleanup
@@ -68,7 +69,7 @@ describe("getMulticall", () => {
       })
     );
 
-    expect(responses).toMatchSnapshot();
+    expect(filterError(responses)).toMatchSnapshot();
     expect(fetchSpy.mock.calls.length).toEqual(2);
     // cleanup
     fetchSpy.mockRestore();

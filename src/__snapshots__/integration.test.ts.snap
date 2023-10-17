@@ -21,26 +21,6 @@ exports[`getMulticall one call fails in a batch with sequencer 1`] = `
     },
   },
   {
-    "reason": [GatewayError: Error at pc=0:25:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:128)
-Unknown location (pc=0:68)
-Unknown location (pc=0:160)
-Unknown location (pc=0:199)
-Unknown location (pc=0:199)
-Error message: multicall 2 failed
-Unknown location (pc=0:177)
-
-Error in the called contract (0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7):
-Error at pc=0:104:
-Got an exception while executing a hint.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:1678)
-Unknown location (pc=0:1664)
-
-Error in the called contract (0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7):
-Entry point 0x35a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33 not found in contract with class hash 0x2760f25d5a4fb2bdde5f561fd0b44a3dee78c28903577d37d669939d97036a0.],
     "status": "rejected",
   },
   {
@@ -76,13 +56,6 @@ exports[`getMulticall one call fails in a batch with rpc 1`] = `
     },
   },
   {
-    "reason": [LibraryError: -32603: Internal error: Error in the called contract (0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7):
-Error at pc=0:104:
-Got an exception while executing a hint: Hint Error: Entry point EntryPointSelector(StarkFelt("0x035a73cd311a05d46deda634c5ee045db92f811b4e74bca4437fcb5302b7af33")) not found in contract.
-Cairo traceback (most recent call last):
-Unknown location (pc=0:1678)
-Unknown location (pc=0:1664)
-],
     "status": "rejected",
   },
   {

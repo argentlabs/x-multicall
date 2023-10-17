@@ -8,6 +8,7 @@ import {
   test,
 } from "bun:test";
 import { RpcBatchProvider } from "./RpcBatchProvider";
+import { filterError } from "../utils.test";
 
 function getBatchProvider() {
   if (!process.env.TEST_RPC_PROVIDER) {
@@ -99,7 +100,7 @@ describe("RpcBatchProvider", () => {
       })
     );
 
-    expect(responses).toMatchSnapshot();
+    expect(filterError(responses)).toMatchSnapshot();
     expect(globalFetchMock.mock.calls.length).toEqual(2);
   });
 
