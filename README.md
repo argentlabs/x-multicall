@@ -86,3 +86,4 @@ In the above example, batchInterval is the time interval (in ms) at which batch 
 ## License
 
 This project is licensed under the [MIT license](LICENSE).
+
