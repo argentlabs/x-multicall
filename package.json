@@ -4,15 +4,18 @@
   "repository": "github:argentlabs/x-multicall.git",
   "private": false,
   "license": "MIT",
+  "main": "dist/esm/index.js",
   "module": "dist/esm/index.ts",
   "types": "dist/types/index.d.ts",
+  "browser": "dist/esm/index.js",
   "type": "module",
   "sideEffects": false,
   "exports": {
     ".": {
       "default": "./dist/esm/index.js",
       "import": "./dist/esm/index.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/index.d.ts",
+      "browser": "./dist/esm/index.js"
     }
   },
   "files": [
