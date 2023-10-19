@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getMulticall one call fails in a batch with sequencer 1`] = `
+exports[`getBatchProvider one call fails in a batch with sequencer 1`] = `
 [
   {
     "status": "fulfilled",
@@ -35,7 +35,7 @@ exports[`getMulticall one call fails in a batch with sequencer 1`] = `
 ]
 `;
 
-exports[`getMulticall one call fails in a batch with rpc 1`] = `
+exports[`getBatchProvider one call fails in a batch with rpc 1`] = `
 [
   {
     "status": "fulfilled",

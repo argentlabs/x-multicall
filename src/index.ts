@@ -7,7 +7,7 @@ import { SequencerBatchProvider } from "./sequencer/index";
 export { RpcBatchProvider } from "./rpc/RpcBatchProvider";
 export { SequencerBatchProvider } from "./sequencer/index";
 
-export default function getBatchProvider(
+export function getBatchProvider(
   provider: MinimalProviderInterface,
   dataloaderOptions?: DataLoaderOptions,
   multicallAddressIfSequencer?: string
