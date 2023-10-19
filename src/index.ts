@@ -14,16 +14,18 @@ export function getBatchProvider(
   dataloaderOptions?: DataLoaderOptions,
   multicallAddressIfSequencer?: string
 ): MinimalProviderInterface {
-  if (provider instanceof RpcProvider) {
+  if ("nodeUrl" in provider) {
+    const rpcProvider: RpcProvider = provider as RpcProvider;
     return new RpcBatchProvider({
-      nodeUrl: provider.nodeUrl,
-      headers: provider.headers,
+      nodeUrl: rpcProvider.nodeUrl,
+      headers: rpcProvider.headers,
       ...dataloaderOptions,
     });
   }
-  if (provider instanceof SequencerProvider) {
+  if ("baseUrl" in provider) {
+    const sequencerProvider: SequencerProvider = provider as SequencerProvider;
     return new SequencerBatchProvider(
-      provider,
+      sequencerProvider,
       multicallAddressIfSequencer,
       dataloaderOptions
     );
