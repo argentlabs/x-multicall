@@ -34,8 +34,8 @@
   "scripts": {
     "dev": "bun run build --watch",
     "build": "bun run build:cjs && bun run build:esm && bun run build:types",
-    "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --moduleResolution node --outDir ./dist/cjs --removeComments && printf '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
-    "build:esm": "tsc --project ./tsconfig.build.json --module es2015 --outDir ./dist/esm && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./dist/esm/package.json",
+    "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --moduleResolution node --outDir ./dist/cjs --removeComments",
+    "build:esm": "tsc --project ./tsconfig.build.json --module es2015 --outDir ./dist/esm",
     "build:types": "tsc --project ./tsconfig.build.json --module esnext --declarationDir ./dist/types --emitDeclarationOnly --declaration --declarationMap",
     "test": "bun test",
     "test:watch": "bun test --watch",
