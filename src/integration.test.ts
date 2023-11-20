@@ -1,15 +1,15 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import getMulticall from "./index";
+import { getBatchProvider } from "./index";
 import { RpcProvider, SequencerProvider, constants } from "starknet";
 import { filterError } from "./utils.test";
 
-describe("getMulticall", () => {
+describe("getBatchProvider", () => {
   test("one call fails in a batch with sequencer", async () => {
     const provider = new SequencerProvider({
       network: constants.NetworkName.SN_MAIN,
     });
     const callContractSpy = spyOn(provider, "callContract");
-    const mc = getMulticall(provider);
+    const mc = getBatchProvider(provider);
 
     // wait 400ms to make sure the batch is sent
     await new Promise((resolve) => setTimeout(resolve, 400));
@@ -46,7 +46,7 @@ describe("getMulticall", () => {
     const provider = new RpcProvider({
       nodeUrl: process.env.TEST_RPC_PROVIDER,
     });
-    const mc = getMulticall(provider);
+    const mc = getBatchProvider(provider);
 
     // wait 400ms to make sure the batch is sent
     await new Promise((resolve) => setTimeout(resolve, 400));

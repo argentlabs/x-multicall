@@ -15,7 +15,7 @@ pnpm add @argent/x-multicall
 Here is a basic usage example:
 
 ```typescript
-import getBatchProvider from "@argent/x-multicall";
+import { getBatchProvider } from "@argent/x-multicall";
 import { RpcProvider } from "starknet";
 
 const provider = new RpcProvider({ nodeUrl: "your_node_url" });
