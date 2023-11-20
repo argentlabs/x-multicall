@@ -55,7 +55,9 @@ export class RpcBatchProvider extends RpcProvider {
 
     const data: RPC.Response[] = await response.json();
 
-    return data;
+    const sortedData = data.sort((a, b) => a.id - b.id); // Sort the response to match the order of the requests
+
+    return sortedData;
   }
 
   protected async fetchEndpoint<T extends keyof RPC.Methods>(
