@@ -57,7 +57,13 @@ export class RpcBatchProvider extends RpcProvider {
     const data: RPC.Response[] = await response.json().catch(async () => {
       const errorText = await responseErrorClone.text();
       throw new Error(
-        `Failed to parse response as JSON, body:\n${JSON.stringify(errorText)}`
+        `Failed to parse response as JSON
+
+        method: POST
+        url: ${this.nodeUrl}
+        headers: ${JSON.stringify(this.headers)}
+        requestBody: ${JSON.stringify(body)}
+        responseBody:\n${JSON.stringify(errorText)}`
       );
     });
 
