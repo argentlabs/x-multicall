@@ -53,7 +53,12 @@ export class RpcBatchProvider extends RpcProvider {
       );
     }
 
-    const data: RPC.Response[] = await response.json();
+    const data: RPC.Response[] = await response.json().catch(async () => {
+      const data = await response.text();
+      throw new Error(
+        `Failed to parse response as JSON, body:\n${JSON.stringify(data)}`
+      );
+    });
 
     const sortedData = data.sort((a, b) => a.id - b.id); // Sort the response to match the order of the requests
 
