@@ -1,6 +1,6 @@
 # @argent/x-multicall
 
-This package provides batch request functionality for Starknet RPC and Sequencer providers. It exports two classes RpcBatchProvider and SequencerBatchProvider for RPC and Sequencer providers respectively. It also exports a default function getBatchProvider which returns an instance of either RpcBatchProvider or SequencerBatchProvider based on the provider type passed to it.
+This package provides batch request functionality for Starknet RPC providers. It exports two classes RpcBatchProvider for RPC provider. It also exports a default function getBatchProvider which returns an instance of either RpcBatchProvider based on the provider type passed to it.
 
 ## Installation
 
@@ -59,13 +59,13 @@ To run tests in watch mode, use:
 bun run test:watch
 ```
 
-## RpcBatchProvider and SequencerBatchProvider
+## RpcBatchProvider
 
-RpcBatchProvider and SequencerBatchProvider are classes that extend the RpcProvider and SequencerProvider respectively, adding batch request functionality. They can be used as follows:
+RpcBatchProvider is a class that extend the RpcProvider, adding batch request functionality. They can be used as follows:
 
 ```typescript
-import { RpcBatchProvider, SequencerBatchProvider } from "@argent/x-multicall";
-import { RpcProvider, SequencerProvider } from "starknet";
+import { RpcBatchProvider } from "@argent/x-multicall";
+import { RpcProvider } from "starknet";
 
 const rpcProvider = new RpcProvider({ nodeUrl: "your_rpc_node_url" });
 const rpcBatchProvider = new RpcBatchProvider({
@@ -74,11 +74,6 @@ const rpcBatchProvider = new RpcBatchProvider({
   batchInterval: 200,
   maxBatchSize: 20,
 });
-
-const sequencerProvider = new SequencerProvider({
-  network: "your_network_name",
-});
-const sequencerBatchProvider = new SequencerBatchProvider(sequencerProvider);
 ```
 
 In the above example, batchInterval is the time interval (in ms) at which batch requests are sent and maxBatchSize is the maximum number of requests that can be included in a batch. These options can be adjusted according to your needs.
