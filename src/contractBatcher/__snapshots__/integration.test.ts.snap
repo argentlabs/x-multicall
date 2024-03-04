@@ -1,0 +1,35 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContractBatcherProvider one call fails in a batch 1`] = `
+[
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+]
+`;
+
+exports[`ContractBatcherProvider two call fails in a batch 1`] = `
+[
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+]
+`;
