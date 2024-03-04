@@ -5,7 +5,7 @@ import { getDataLoader } from "./dataloader";
 
 const DEFAULT_MULTICALL_ADDRESS = "0x05754af3760f3356da99aea5c3ec39ccac7783d925a19666ebbeca58ff0087f4";
 
-export class ContractBatcherProvider implements MinimalProviderInterface {
+export class ContractBatchProvider implements MinimalProviderInterface {
   public readonly dataloader: DataLoader<Call, string[], Call>;
 
   constructor(

@@ -1,11 +1,11 @@
 import { RpcProvider } from "starknet";
 
 import type { DataLoaderOptions, MinimalProviderInterface, MinimalProviderInterface5 } from "./types";
-import { ContractBatcherProvider } from "./contractBatcher/ContractBatcherProvider";
+import { ContractBatchProvider } from "./contractBatch/ContractBatchProvider";
 import { RpcBatchProvider } from "./rpc/RpcBatchProvider";
 
 export { RpcBatchProvider } from "./rpc/RpcBatchProvider";
-export { ContractBatcherProvider } from "./contractBatcher/ContractBatcherProvider";
+export { ContractBatchProvider } from "./contractBatch/ContractBatchProvider";
 
 export type { DataLoaderOptions, MinimalProviderInterface };
 
@@ -24,11 +24,11 @@ export function getBatchProvider(
   }
 
   if ("baseUrl" in provider) {
-    const contractBatcherProvider: ContractBatcherProvider = provider as unknown as ContractBatcherProvider;
-    return new ContractBatcherProvider(contractBatcherProvider, multicallAddressIfSequencer, dataloaderOptions);
+    const contractBatchProvider: ContractBatchProvider = provider as unknown as ContractBatchProvider;
+    return new ContractBatchProvider(contractBatchProvider, multicallAddressIfSequencer, dataloaderOptions);
   }
 
-  console.warn("[MC] Warning: Provider is not RpcProvider or ContractBatcherProvider, fallback to original provider");
+  console.warn("[MC] Warning: Provider is not RpcProvider or ContractBatchProvider, fallback to original provider");
 
   console.warn("[MC] Warning: Provider is not RpcProvider, fallback to original provider");
   return provider as MinimalProviderInterface;

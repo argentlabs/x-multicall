@@ -1,5 +1,5 @@
 import { describe, expect, mock, Mock, test } from "bun:test";
-import { ContractBatcherProvider } from "./ContractBatcherProvider";
+import { ContractBatchProvider } from "./ContractBatchProvider";
 import { constants, SequencerProvider } from "starknet5";
 import { Call, CallContractResponse } from "starknet";
 import { filterError } from "../utils.test";
@@ -25,10 +25,10 @@ function getIntegrationProvider(): MinimalMockProviderInterface {
   };
 }
 
-describe("ContractBatcherProvider", () => {
+describe("ContractBatchProvider", () => {
   test("should return the correct result for one call", async () => {
     const provider = getIntegrationProvider();
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
     expect(provider.callContract.mock.calls.length).toEqual(0);
 
     const result = await mc.callContract({
@@ -43,7 +43,7 @@ describe("ContractBatcherProvider", () => {
 
   test("should return the correct result for multiple calls with one request", async () => {
     const provider = getIntegrationProvider();
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
     const responses = await Promise.all(
       new Array(4).fill(null).map((_, i) =>
@@ -66,7 +66,7 @@ describe("ContractBatcherProvider", () => {
 
   test("one call fails in a batch", async () => {
     const provider = getIntegrationProvider();
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
     const responses = await Promise.allSettled(
       new Array(4).fill(null).map((_, i) => {
@@ -91,7 +91,7 @@ describe("ContractBatcherProvider", () => {
 
   test("two call fails in a batch", async () => {
     const provider = getIntegrationProvider();
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
     const responses = await Promise.allSettled(
       new Array(4).fill(null).map((_, i) => {

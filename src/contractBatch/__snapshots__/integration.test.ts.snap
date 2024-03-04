@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContractBatcherProvider one call fails in a batch 1`] = `
+exports[`ContractBatchProvider one call fails in a batch 1`] = `
 [
   {
     "status": "rejected",
@@ -17,7 +17,7 @@ exports[`ContractBatcherProvider one call fails in a batch 1`] = `
 ]
 `;
 
-exports[`ContractBatcherProvider two call fails in a batch 1`] = `
+exports[`ContractBatchProvider two call fails in a batch 1`] = `
 [
   {
     "status": "rejected",

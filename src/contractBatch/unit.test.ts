@@ -1,5 +1,5 @@
 import { describe, expect, mock, test } from "bun:test";
-import { ContractBatcherProvider } from "./ContractBatcherProvider";
+import { ContractBatchProvider } from "./ContractBatchProvider";
 import { MinimalProviderInterface } from "../types";
 
 function getMockProvider(responses: string[][]): MinimalProviderInterface {
@@ -14,7 +14,7 @@ function getMockProvider(responses: string[][]): MinimalProviderInterface {
 describe("SequencerBatchProvider", () => {
   test("should return the correct result for one call", async () => {
     const provider = getMockProvider([["0x1337"]]);
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
     const result = await mc.callContract({
       contractAddress: "0x1",
@@ -28,7 +28,7 @@ describe("SequencerBatchProvider", () => {
 
   test("should return the correct result for multiple calls with one request", async () => {
     const provider = getMockProvider([["0x1337"], ["0x1338"], ["0x1339"], ["0x133a"]]);
-    const mc = new ContractBatcherProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
     const responses = await Promise.all(
       new Array(4).fill(null).map((_, i) =>
