@@ -1,16 +1,24 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import { getBatchProvider } from "./index";
 import { RpcProvider } from "starknet";
-import { SequencerProvider, constants } from "starknet5";
 import { filterError } from "./utils.test";
+import { ContractBatchProvider } from ".";
+import { MinimalProviderInterface } from "./types";
+
+function getBatchProvider(provider: MinimalProviderInterface) {
+  if (!process.env.TEST_RPC_PROVIDER) {
+    throw new Error("TEST_RPC_PROVIDER env variable is not set");
+  }
+
+  return new ContractBatchProvider(provider);
+}
 
 describe("getBatchProvider", () => {
-  test("one call fails in a batch with sequencer", async () => {
-    const provider = new SequencerProvider({
-      network: constants.NetworkName.SN_MAIN,
+  test("one call fails in a batch with ContractBatchProvider", async () => {
+    const provider = new RpcProvider({
+      nodeUrl: process.env.TEST_RPC_PROVIDER,
     });
     const callContractSpy = spyOn(provider, "callContract");
-    const mc = getBatchProvider(provider);
+    const mc = getBatchProvider(provider as any);
 
     // wait 400ms to make sure the batch is sent
     await new Promise((resolve) => setTimeout(resolve, 400));
@@ -39,7 +47,7 @@ describe("getBatchProvider", () => {
     // cleanup
     callContractSpy.mockRestore();
   });
-  test("one call fails in a batch with rpc", async () => {
+  test("one call fails in a batch with RpcProvider", async () => {
     if (!process.env.TEST_RPC_PROVIDER) {
       throw new Error("TEST_RPC_PROVIDER env variable is not set");
     }

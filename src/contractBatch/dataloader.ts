@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import { type Call, CallData, hash, num } from "starknet5";
+import { type Call, CallData, hash, num } from "starknet";
 
 import { aggregate } from "./aggregate";
 import type { DataLoaderOptions, MinimalProviderInterface } from "../types";

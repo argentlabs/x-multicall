@@ -1,6 +1,7 @@
 # @argent/x-multicall
 
-This package provides batch request functionality for Starknet RPC providers. It exports two classes RpcBatchProvider for RPC provider. It also exports a default function getBatchProvider which returns an instance of either RpcBatchProvider based on the provider type passed to it.
+This package provides batch request functionality for Starknet RPC providers.
+It exports two classes: RpcBatchProvider and ContractBatchProvider.
 
 ## Installation
 
@@ -15,11 +16,14 @@ pnpm add @argent/x-multicall
 Here is a basic usage example:
 
 ```typescript
-import { getBatchProvider } from "@argent/x-multicall";
+import { RpcBatchProvider } from "@argent/x-multicall";
 import { RpcProvider } from "starknet";
 
 const provider = new RpcProvider({ nodeUrl: "your_node_url" });
-const batchProvider = getBatchProvider(provider);
+const batchProvider = new RpcBatchProvider({
+  nodeUrl: rpcProvider.nodeUrl,
+  headers: rpcProvider.headers,
+});
 
 // Now you can use batchProvider to make batch requests
 const result = batchProvider.callContract({
@@ -61,7 +65,7 @@ bun run test:watch
 
 ## RpcBatchProvider
 
-RpcBatchProvider is a class that extend the RpcProvider, adding batch request functionality. They can be used as follows:
+RpcBatchProvider is a class that extend the RpcProvider, adding batch request functionality.
 
 ```typescript
 import { RpcBatchProvider } from "@argent/x-multicall";
@@ -74,9 +78,36 @@ const rpcBatchProvider = new RpcBatchProvider({
   batchInterval: 200,
   maxBatchSize: 20,
 });
+
+const result = rpcBatchProvider.callContract({
+  contractAddress: "0x0",
+  entrypoint: "0x0",
+  calldata: ["0x0"],
+});
 ```
 
 In the above example, batchInterval is the time interval (in ms) at which batch requests are sent and maxBatchSize is the maximum number of requests that can be included in a batch. These options can be adjusted according to your needs.
+
+## ContractBatchProvider
+
+ContractBatchProvider is a class that extend MinimalProviderInterface (requires a provider with `callContract`) and allows contract batching instead of json rpc batching.
+
+```typescript
+import { ContractBatchProvider } from "@argent/x-multicall";
+import { RpcProvider } from "starknet";
+
+const rpcProvider = new RpcProvider({ nodeUrl: "your_rpc_node_url" });
+const contractBatchProvider = new ContractBatchProvider(rpcProvider, {
+  batchInterval: 200,
+  maxBatchSize: 20,
+});
+
+const result = contractBatchProvider.callContract({
+  contractAddress: "0x0",
+  entrypoint: "0x0",
+  calldata: ["0x0"],
+});
+```
 
 ## License
 

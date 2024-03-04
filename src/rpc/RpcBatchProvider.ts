@@ -10,6 +10,7 @@ type RpcRequest<T extends keyof RPC.Methods = keyof RPC.Methods> = {
 export class RpcBatchProvider extends RpcProvider {
   private wait: number;
   private batchSize: number;
+  // TODO: use correct type when exported from starknetjs
   private loader: DataLoader<RpcRequest, any /* RPC.ResponseBody[] */> | undefined;
 
   constructor({ batchInterval, maxBatchSize, ...optionsOrProvider }: DataLoaderOptions & RpcProviderOptions) {
@@ -24,6 +25,7 @@ export class RpcBatchProvider extends RpcProvider {
     });
   }
 
+  // TODO: use correct type when exported from starknetjs
   private async batchRequests(requests: readonly RpcRequest[]): Promise<any /* RPC.ResponseBody[] */> {
     const body = requests.map(({ method, params }, i) => ({
       method,
@@ -44,6 +46,7 @@ export class RpcBatchProvider extends RpcProvider {
     }
 
     const responseErrorClone = response.clone();
+    // TODO: use correct type when exported from starknetjs
     const data: any /* RPC.Response[] */ | unknown = await response.json().catch(async () => {
       const errorText = await responseErrorClone.text();
       throw new Error(

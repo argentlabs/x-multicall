@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import type { Call, CallContractResponse } from "starknet";
+import { Call, CallContractResponse } from "starknet";
 import type { DataLoaderOptions, MinimalProviderInterface } from "../types";
 import { getDataLoader } from "./dataloader";
 

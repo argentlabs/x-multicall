@@ -1,7 +1,6 @@
 import { describe, expect, mock, Mock, test } from "bun:test";
 import { ContractBatchProvider } from "./ContractBatchProvider";
-import { constants, SequencerProvider } from "starknet5";
-import { Call, CallContractResponse } from "starknet";
+import { Call, CallContractResponse, RpcProvider } from "starknet";
 import { filterError } from "../utils.test";
 
 interface MinimalMockProviderInterface {
@@ -9,13 +8,13 @@ interface MinimalMockProviderInterface {
 }
 
 function getIntegrationProvider(): MinimalMockProviderInterface {
-  const provider = new SequencerProvider({
-    network: constants.NetworkName.SN_MAIN,
+  const provider = new RpcProvider({
+    nodeUrl: process.env.TEST_RPC_PROVIDER,
   });
   return {
     callContract: mock(async (call) => {
       const { contractAddress, entrypoint, calldata = [] } = call;
-      const { result } = await provider.callContract({
+      const result = await provider.callContract({
         contractAddress,
         entrypoint,
         calldata,

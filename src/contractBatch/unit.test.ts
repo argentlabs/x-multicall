@@ -11,7 +11,7 @@ function getMockProvider(responses: string[][]): MinimalProviderInterface {
   };
 }
 
-describe("SequencerBatchProvider", () => {
+describe("ContractBatchProvider", () => {
   test("should return the correct result for one call", async () => {
     const provider = getMockProvider([["0x1337"]]);
     const mc = new ContractBatchProvider(provider);
