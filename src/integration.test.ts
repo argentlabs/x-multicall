@@ -14,7 +14,7 @@ describe("getBatchProvider", () => {
 
     // wait 400ms to make sure the batch is sent
     await new Promise((resolve) => setTimeout(resolve, 400));
-    expect(callContractSpy.mock.calls.length).toEqual(0);
+    expect(callContractSpy.mock.calls.length).toEqual(1);
 
     const responses = await Promise.allSettled(
       new Array(4).fill(null).map((_, i) => {

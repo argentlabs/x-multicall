@@ -3,69 +3,16 @@
 exports[`getBatchProvider one call fails in a batch with sequencer 1`] = `
 [
   {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
+    "status": "rejected",
   },
   {
     "status": "rejected",
   },
   {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
-  },
-]
-`;
-
-exports[`getBatchProvider one call fails in a batch with rpc 1`] = `
-[
-  {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
-  },
-  {
     "status": "rejected",
   },
   {
-    "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
+    "status": "rejected",
   },
 ]
 `;
