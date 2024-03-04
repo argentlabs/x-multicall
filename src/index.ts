@@ -14,7 +14,7 @@ export function getBatchProvider(
   dataloaderOptions?: DataLoaderOptions,
   multicallAddressIfSequencer?: string
 ): MinimalProviderInterface {
-  if ("nodeUrl" in provider) {
+  if ("channel" in provider) {
     const rpcProvider: RpcProvider = provider as unknown as RpcProvider;
     return new RpcBatchProvider({
       nodeUrl: rpcProvider.channel.nodeUrl,
