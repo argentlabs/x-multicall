@@ -85,7 +85,7 @@ describe("ContractBatchProvider", () => {
     );
 
     expect(filterError(responses)).toMatchSnapshot();
-    expect(provider.callContract.mock.calls.length).toEqual(2);
+    expect(provider.callContract.mock.calls.length).toEqual(1);
   });
 
   test("two call fails in a batch", async () => {
@@ -110,6 +110,6 @@ describe("ContractBatchProvider", () => {
     );
 
     expect(filterError(responses)).toMatchSnapshot();
-    expect(provider.callContract.mock.calls.length).toEqual(3);
+    expect(provider.callContract.mock.calls.length).toEqual(1);
   });
 });
