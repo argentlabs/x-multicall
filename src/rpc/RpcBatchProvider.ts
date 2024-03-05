@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import { RpcProvider, type RpcProviderOptions, RPC, LibraryError } from "starknet";
+import { RpcProvider, type RpcProviderOptions, RPC, LibraryError, Call, BlockIdentifier, RpcChannel } from "starknet";
 import type { DataLoaderOptions } from "../types";
 
 type RpcRequest<T extends keyof RPC.Methods = keyof RPC.Methods> = {
@@ -7,7 +7,7 @@ type RpcRequest<T extends keyof RPC.Methods = keyof RPC.Methods> = {
   params: RPC.Methods[T]["params"];
 };
 
-export class RpcBatchProvider extends RpcProvider {
+export class RpcChannelBatch extends RpcChannel {
   private wait: number;
   private batchSize: number;
   // TODO: use correct type when exported from starknetjs
@@ -34,10 +34,10 @@ export class RpcBatchProvider extends RpcProvider {
       id: i,
     }));
 
-    const response = await fetch(this.channel.nodeUrl, {
+    const response = await fetch(this.nodeUrl, {
       method: "POST",
       body: JSON.stringify(body),
-      headers: this.channel.headers as Record<string, string>,
+      headers: this.headers as Record<string, string>,
     });
 
     if (!response.ok) {
@@ -53,8 +53,8 @@ export class RpcBatchProvider extends RpcProvider {
         `Failed to parse response as JSON
 
         method: POST
-        url: ${this.channel.nodeUrl}
-        headers: ${JSON.stringify(this.channel.headers)}
+        url: ${this.nodeUrl}
+        headers: ${JSON.stringify(this.headers)}
         requestBody: ${JSON.stringify(body)}
         responseBody:\n${JSON.stringify(errorText)}`
       );
@@ -92,5 +92,14 @@ export class RpcBatchProvider extends RpcProvider {
     const { error, result } = response;
     this.errorHandler(error, params);
     return result;
+  }
+}
+
+export class RpcBatchProvider extends RpcProvider {
+  constructor({ batchInterval, maxBatchSize, ...optionsOrProvider }: DataLoaderOptions & RpcProviderOptions) {
+    super({
+      channel: new RpcChannelBatch({ batchInterval, maxBatchSize, ...optionsOrProvider }),
+      ...optionsOrProvider,
+    });
   }
 }

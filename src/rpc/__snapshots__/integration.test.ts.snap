@@ -4,33 +4,31 @@ exports[`RpcBatchProvider one call fails in a batch 1`] = `
 [
   {
     "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
+    "value": [
+      "0x0",
+      "0x0",
+    ],
   },
   {
     "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
-  },
-  {
-    "status": "rejected",
+    "value": [
+      "0x0",
+      "0x0",
+    ],
   },
   {
     "status": "fulfilled",
-    "value": {
-      "result": [
-        "0x0",
-        "0x0",
-      ],
-    },
+    "value": [
+      "0x0",
+      "0x0",
+    ],
+  },
+  {
+    "status": "fulfilled",
+    "value": [
+      "0x0",
+      "0x0",
+    ],
   },
 ]
 `;
