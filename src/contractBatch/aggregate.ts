@@ -1,11 +1,4 @@
-import {
-  type Call,
-  GatewayError,
-  LibraryError,
-  num,
-  transaction,
-  CallData,
-} from "starknet";
+import { type Call, GatewayError, LibraryError, num, transaction, CallData } from "starknet";
 import type { MinimalProviderInterface } from "../types";
 
 const partitionResponses = (responses: string[]): string[][] => {
@@ -25,9 +18,7 @@ const extractErrorCallIndex = (e: Error) => {
   try {
     const errorCallText = e.toString();
 
-    const sequencerErrorIndex = errorCallText.match(
-      /Error message: multicall (\d+) failed/
-    )?.[1];
+    const sequencerErrorIndex = errorCallText.match(/Error message: multicall (\d+) failed/)?.[1];
     if (sequencerErrorIndex) {
       return Number(sequencerErrorIndex);
     }
@@ -37,10 +28,7 @@ const extractErrorCallIndex = (e: Error) => {
   }
 };
 
-const fallbackAggregate = async (
-  provider: MinimalProviderInterface,
-  calls: Call[]
-): Promise<(string[] | Error)[]> => {
+const fallbackAggregate = async (provider: MinimalProviderInterface, calls: Call[]): Promise<(string[] | Error)[]> => {
   const results = await Promise.allSettled(
     calls.map((call) =>
       provider
@@ -49,7 +37,7 @@ const fallbackAggregate = async (
           entrypoint: call.entrypoint,
           calldata: CallData.toCalldata(call.calldata),
         })
-        .then((res) => res.result)
+        .then((res) => res)
     )
   );
 
@@ -76,7 +64,7 @@ export const aggregate = async (
       calldata: transaction.fromCallsToExecuteCalldata([...calls]),
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_blockNumber, _totalLength, ...results] = res.result;
+    const [_blockNumber, _totalLength, ...results] = res;
 
     return partitionResponses(results);
   } catch (e) {
@@ -86,8 +74,7 @@ export const aggregate = async (
 
     if (
       // in case multicall contract is not deployed, fallback to calling each call separately
-      (e instanceof GatewayError &&
-        e.errorCode === "StarknetErrorCode.UNINITIALIZED_CONTRACT") || // Sequencer
+      (e instanceof GatewayError && e.errorCode === "StarknetErrorCode.UNINITIALIZED_CONTRACT") || // Sequencer
       (e instanceof LibraryError && e.message === "20: Contract not found") // RPC
     ) {
       return fallbackAggregate(provider, calls);
@@ -95,15 +82,7 @@ export const aggregate = async (
 
     const errorCallIndex = extractErrorCallIndex(e);
     const remainingCalls = calls.filter((_, i) => i !== errorCallIndex);
-    const remainingResults = await aggregate(
-      provider,
-      multicallAddress,
-      remainingCalls
-    );
-    return [
-      ...remainingResults.slice(0, errorCallIndex),
-      e,
-      ...remainingResults.slice(errorCallIndex),
-    ];
+    const remainingResults = await aggregate(provider, multicallAddress, remainingCalls);
+    return [...remainingResults.slice(0, errorCallIndex), e, ...remainingResults.slice(errorCallIndex)];
   }
 };

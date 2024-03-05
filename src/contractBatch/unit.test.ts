@@ -1,27 +1,22 @@
 import { describe, expect, mock, test } from "bun:test";
-import { SequencerBatchProvider } from "./index";
+import { ContractBatchProvider } from "./ContractBatchProvider";
 import { MinimalProviderInterface } from "../types";
 
 function getMockProvider(responses: string[][]): MinimalProviderInterface {
   const blockNumber = "0x1";
-  const flatResponsesWithLength = responses.flatMap((r) => [
-    r.length.toString(),
-    ...r,
-  ]);
+  const flatResponsesWithLength = responses.flatMap((r) => [r.length.toString(), ...r]);
   const totalLength = flatResponsesWithLength.length.toString();
   return {
-    callContract: mock(async () => ({
-      result: [blockNumber, totalLength, ...flatResponsesWithLength],
-    })),
+    callContract: mock(async () => [blockNumber, totalLength, ...flatResponsesWithLength]),
   };
 }
 
-describe("SequencerBatchProvider", () => {
+describe("ContractBatchProvider", () => {
   test("should return the correct result for one call", async () => {
     const provider = getMockProvider([["0x1337"]]);
-    const mc = new SequencerBatchProvider(provider);
+    const mc = new ContractBatchProvider(provider);
 
-    const { result } = await mc.callContract({
+    const result = await mc.callContract({
       contractAddress: "0x1",
       entrypoint: "0x2",
       calldata: [],
@@ -32,13 +27,8 @@ describe("SequencerBatchProvider", () => {
   });
 
   test("should return the correct result for multiple calls with one request", async () => {
-    const provider = getMockProvider([
-      ["0x1337"],
-      ["0x1338"],
-      ["0x1339"],
-      ["0x133a"],
-    ]);
-    const mc = new SequencerBatchProvider(provider);
+    const provider = getMockProvider([["0x1337"], ["0x1338"], ["0x1339"], ["0x133a"]]);
+    const mc = new ContractBatchProvider(provider);
 
     const responses = await Promise.all(
       new Array(4).fill(null).map((_, i) =>
@@ -50,12 +40,7 @@ describe("SequencerBatchProvider", () => {
       )
     );
 
-    expect(responses).toEqual([
-      { result: ["0x1337"] },
-      { result: ["0x1338"] },
-      { result: ["0x1339"] },
-      { result: ["0x133a"] },
-    ]);
+    expect(responses).toEqual([["0x1337"], ["0x1338"], ["0x1339"], ["0x133a"]]);
     expect(provider.callContract).toHaveBeenCalledTimes(1);
   });
 });

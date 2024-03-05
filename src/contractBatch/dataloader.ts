@@ -15,11 +15,7 @@ export const getDataLoader = (
   const dl = new DataLoader(
     async (calls: readonly Call[]): Promise<(string[] | Error)[]> => {
       dl.clearAll();
-      const result = await aggregate(
-        provider,
-        multicallAddress,
-        calls as Call[]
-      );
+      const result = await aggregate(provider, multicallAddress, calls as Call[]);
       return result;
     },
     {
