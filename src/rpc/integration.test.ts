@@ -109,7 +109,6 @@ describe("RpcBatchProvider", () => {
       })
     );
 
-    console.log("result", filterError(responses));
     expect(filterError(responses)).toMatchSnapshot();
     expect(globalFetchMock.mock.calls.length).toEqual(1);
   });
