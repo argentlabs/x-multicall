@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RpcBatchProvider one call fails in a batch 1`] = `
+exports[`ContractBatchProvider one call fails in a batch 1`] = `
 [
   {
     "status": "fulfilled",
@@ -29,6 +29,23 @@ exports[`RpcBatchProvider one call fails in a batch 1`] = `
       "0x0",
       "0x0",
     ],
+  },
+]
+`;
+
+exports[`ContractBatchProvider two call fails in a batch 1`] = `
+[
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
+  },
+  {
+    "status": "rejected",
   },
 ]
 `;
