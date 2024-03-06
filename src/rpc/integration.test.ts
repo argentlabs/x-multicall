@@ -1,7 +1,6 @@
-import { Mock, afterEach, beforeAll, describe, expect, mock, spyOn, test } from "bun:test";
-import { RpcBatchProvider } from "./RpcBatchProvider";
+import { Mock, afterEach, beforeAll, describe, expect, mock, test } from "bun:test";
 import { filterError } from "../utils.test";
-import { Call, CallContractResponse, RpcProvider } from "starknet";
+import { RpcBatchProvider } from "./RpcBatchProvider";
 
 function getBatchProvider() {
   if (!process.env.TEST_RPC_PROVIDER) {
@@ -14,27 +13,6 @@ function getBatchProvider() {
     maxBatchSize: 20,
     waitMode: true,
   });
-}
-
-interface MinimalMockProviderInterface {
-  callContract: Mock<(call: Call) => Promise<CallContractResponse>>;
-}
-
-function getIntegrationProvider(): MinimalMockProviderInterface {
-  const provider = new RpcProvider({
-    nodeUrl: process.env.TEST_RPC_PROVIDER,
-  });
-  return {
-    callContract: mock(async (call) => {
-      const { contractAddress, entrypoint, calldata = [] } = call;
-      const result = await provider.callContract({
-        contractAddress,
-        entrypoint,
-        calldata,
-      });
-      return result;
-    }),
-  };
 }
 
 describe("RpcBatchProvider", () => {
