@@ -1,6 +1,30 @@
 import DataLoader from "dataloader";
-import { RpcProvider, type RpcProviderOptions, RPC, LibraryError, Call, BlockIdentifier, RpcChannel } from "starknet";
+import { RpcProvider, type RpcProviderOptions, RPC, LibraryError, RpcChannel } from "starknet";
 import type { DataLoaderOptions } from "../types";
+
+import { sha256 } from "@noble/hashes/sha2";
+import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils";
+
+/** Recursively copy `value`, sorting all plain-object keys. */
+function deepSort<T>(value: T): T {
+  if (Array.isArray(value)) return value.map(deepSort) as T;
+
+  if (value && typeof value === "object" && value.constructor === Object) {
+    return Object.keys(value)
+        .sort()
+        .reduce<Record<string, unknown>>((o, k) => {
+          o[k] = deepSort((value as any)[k]);
+          return o;
+        }, {}) as T;
+  }
+  return value;
+}
+
+/** First 10 hex chars of SHA-256 over the canonical JSON string. */
+function playbackKey(payload: unknown): string {
+  const bytes = sha256(utf8ToBytes(JSON.stringify(payload)));
+  return bytesToHex(bytes).slice(0, 10);
+}
 
 type RpcRequest<T extends keyof RPC.Methods = keyof RPC.Methods> = {
   method: T;
@@ -27,17 +51,34 @@ export class RpcChannelBatch extends RpcChannel {
 
   // TODO: use correct type when exported from starknetjs
   private async batchRequests(requests: readonly RpcRequest[]): Promise<any /* RPC.ResponseBody[] */> {
-    const body = requests.map(({ method, params }, i) => ({
+
+    /* 1 · Create canonical request objects — keep the caller’s ids. */
+    const canonicalRequests = requests.map(({ method, params }, i) => ({
+      id: i,
+      jsonrpc: "2.0",
       method,
       params: params ?? [],
-      jsonrpc: "2.0",
-      id: i,
     }));
+
+    /* 2 · Sort the array so element order is deterministic. */
+    canonicalRequests.sort((a, b) => a.method.localeCompare(b.method) || a.id - b.id);
+
+    /* 3 · Canonical-JSON each object so key order is deterministic. */
+    const bodyCanonical = deepSort(canonicalRequests);
+
+    /* 4 · Stringify once — this exact string is what HAR matching uses. */
+    const bodyString = JSON.stringify(bodyCanonical);
+
+    /* 5 · Attach the deterministic header. */
+    const extraHeaders = {
+    ...(process.env.IS_PLAYWRIGHT === "true" && {"X-Playback-Key": playbackKey(bodyCanonical)}),
+      ...(process.env.IS_PLAYWRIGHT === "true" && { IS_PLAYWRIGHT: "true" }),
+    };
 
     const response = await fetch(this.nodeUrl, {
       method: "POST",
-      body: JSON.stringify(body),
-      headers: this.headers as Record<string, string>,
+      body: bodyString,
+      headers: { ...(this.headers as Record<string, string>), ...extraHeaders },
     });
 
     if (!response.ok) {
@@ -55,7 +96,7 @@ export class RpcChannelBatch extends RpcChannel {
         method: POST
         url: ${this.nodeUrl}
         headers: ${JSON.stringify(this.headers)}
-        requestBody: ${JSON.stringify(body)}
+        requestBody: ${JSON.stringify(canonicalRequests)}
         responseBody:\n${JSON.stringify(errorText)}`
       );
     });
