@@ -1,23 +1,23 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "bun:test"
 
-type MaybeArray<T> = T | Array<T>;
+type MaybeArray<T> = T | Array<T>
 
 export function filterError<T extends MaybeArray<PromiseSettledResult<any>>>(
-  results: T
+  results: T,
 ): T {
-  const isInputArray = Array.isArray(results);
-  const arrayResults = Array.isArray(results) ? results : [results];
+  const isInputArray = Array.isArray(results)
+  const arrayResults = Array.isArray(results) ? results : [results]
 
   const filteredResults = arrayResults.map((result) => {
     if (result.status === "rejected") {
       return {
         status: "rejected",
-      };
+      }
     }
-    return result;
-  });
+    return result
+  })
 
-  return isInputArray ? filteredResults : filteredResults[0];
+  return isInputArray ? (filteredResults as T) : (filteredResults[0] as T)
 }
 
 describe("filterError", () => {
@@ -27,18 +27,18 @@ describe("filterError", () => {
     const data = await Promise.allSettled([
       Promise.resolve(1),
       Promise.resolve(2),
-    ]);
+    ])
     const expected = [
       { status: "fulfilled", value: 1 },
       { status: "fulfilled", value: 2 },
-    ];
+    ] as any
 
     // action
-    const result = filterError(data);
+    const result = filterError(data)
 
     // assertion
-    expect(result).toEqual(expected);
-  });
+    expect(result).toEqual(expected)
+  })
 
   // test when some promises are rejected
   test("filterError with some rejected promises", async () => {
@@ -46,18 +46,18 @@ describe("filterError", () => {
     const data = await Promise.allSettled([
       Promise.resolve(1),
       Promise.reject("Error"),
-    ]);
+    ])
     const expected = [
       { status: "fulfilled", value: 1 },
       { status: "rejected" },
-    ];
+    ] as any
 
     // action
-    const result = filterError(data);
+    const result = filterError(data)
 
     // assertion
-    expect(result).toEqual(expected);
-  });
+    expect(result).toEqual(expected)
+  })
 
   // test when all promises are rejected
   test("filterError with all rejected promises", async () => {
@@ -65,26 +65,26 @@ describe("filterError", () => {
     const data = await Promise.allSettled([
       Promise.reject("Error"),
       Promise.reject("Another error"),
-    ]);
-    const expected = [{ status: "rejected" }, { status: "rejected" }];
+    ])
+    const expected = [{ status: "rejected" }, { status: "rejected" }] as any
 
     // action
-    const result = filterError(data);
+    const result = filterError(data)
 
     // assertion
-    expect(result).toEqual(expected);
-  });
+    expect(result).toEqual(expected)
+  })
 
   // test on single promise
   test("filterError with single promise", async () => {
     // setup
-    const [data] = await Promise.allSettled([Promise.resolve(1)]);
-    const expected = { status: "fulfilled", value: 1 };
+    const [data] = await Promise.allSettled([Promise.resolve(1)])
+    const expected = { status: "fulfilled", value: 1 } as const
 
     // action
-    const result = filterError(data);
+    const result = filterError(data)
 
     // assertion
-    expect(result).toEqual(expected);
-  });
-});
+    expect(result).toEqual(expected)
+  })
+})

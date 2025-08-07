@@ -1,23 +1,24 @@
-import DataLoader from "dataloader";
-import { Call, CallContractResponse } from "starknet";
-import type { DataLoaderOptions, MinimalProviderInterface } from "../types";
-import { getDataLoader } from "./dataloader";
+import DataLoader from "dataloader"
+import { Call, CallContractResponse } from "starknet"
+import type { DataLoaderOptions, MinimalProviderInterface } from "../types"
+import { getDataLoader } from "./dataloader"
 
-const DEFAULT_MULTICALL_ADDRESS = "0x05754af3760f3356da99aea5c3ec39ccac7783d925a19666ebbeca58ff0087f4";
+const DEFAULT_MULTICALL_ADDRESS =
+  "0x05754af3760f3356da99aea5c3ec39ccac7783d925a19666ebbeca58ff0087f4"
 
 export class ContractBatchProvider implements MinimalProviderInterface {
-  public readonly dataloader: DataLoader<Call, string[], Call>;
+  public readonly dataloader: DataLoader<Call, string[], Call>
 
   constructor(
     public readonly provider: MinimalProviderInterface,
     public readonly address: string = DEFAULT_MULTICALL_ADDRESS,
-    dataLoaderOptions?: DataLoaderOptions
+    dataLoaderOptions?: DataLoaderOptions,
   ) {
-    this.dataloader = getDataLoader(provider, address, dataLoaderOptions);
+    this.dataloader = getDataLoader(provider, address, dataLoaderOptions)
   }
 
   public async callContract(call: Call): Promise<CallContractResponse> {
-    const result = await this.dataloader.load(call);
-    return result;
+    const result = await this.dataloader.load(call)
+    return result
   }
 }
