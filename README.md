@@ -109,6 +109,13 @@ const result = contractBatchProvider.callContract({
 });
 ```
 
+## Hotfix workflow
+
+- Checkout the tag of the version you want to hotfix
+- Create a new branch using the format `hotfix/vx.y.z` and increment the patch version
+- Add your changes
+- Commit your changes using the format `fix: <commit message>`
+
 ## License
 
 This project is licensed under the [MIT license](LICENSE).
