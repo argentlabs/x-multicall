@@ -1,6 +1,8 @@
 import { describe, expect, mock, test } from "bun:test"
 import { ContractBatchProvider } from "./ContractBatchProvider"
 import { MinimalProviderInterface } from "../types"
+import { RpcError, LibraryError } from "starknet"
+import { extractErrorCallIndex } from "./aggregate.ts"
 
 function getMockProvider(responses: string[][]): MinimalProviderInterface {
   const blockNumber = "0x1"
@@ -54,5 +56,29 @@ describe("ContractBatchProvider", () => {
 
     expect(responses).toEqual([["0x1337"], ["0x1338"], ["0x1339"], ["0x133a"]])
     expect(provider.callContract).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe("extractErrorCallIndex", () => {
+  test("should extract call index from error message", () => {
+    const error = new Error("Error message: multicall 5 failed")
+    const result = extractErrorCallIndex(error)
+    expect(result).toBe(5)
+  })
+
+  test("should extract call index from error message with colon ", () => {
+    const error = new Error("Error message: multicall 12:300 failed")
+    const result = extractErrorCallIndex(error)
+    expect(result).toBe(12)
+  })
+
+  test("should throw error when pattern doesn't match", () => {
+    const error = new Error("Some other error message")
+    expect(() => extractErrorCallIndex(error)).toThrow()
+  })
+
+  test("should throw error when no index is present", () => {
+    const error = new Error("Error message: multicall failed")
+    expect(() => extractErrorCallIndex(error)).toThrow()
   })
 })
