@@ -1,7 +1,6 @@
 import { describe, expect, mock, test } from "bun:test"
 import { ContractBatchProvider } from "./ContractBatchProvider"
 import { MinimalProviderInterface } from "../types"
-import { RpcError, LibraryError } from "starknet"
 import { extractErrorCallIndex } from "./aggregate.ts"
 
 function getMockProvider(responses: string[][]): MinimalProviderInterface {
