@@ -43,6 +43,7 @@
     "devnet": "docker run -p 5050:5050 shardlabs/starknet-devnet-rs:latest-seed0"
   },
   "dependencies": {
-    "dataloader": "^2.2.3"
+    "dataloader": "2.2.3",
+    "@noble/hashes": "2.0.0"
   }
 }
