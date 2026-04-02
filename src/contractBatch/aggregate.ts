@@ -21,12 +21,12 @@ const partitionResponses = (responses: string[]): string[][] => {
   return [response, ...partitionResponses(remainingResponses)]
 }
 
-const extractErrorCallIndex = (e: Error) => {
+export const extractErrorCallIndex = (e: Error) => {
   try {
     const errorCallText = e.toString()
 
     const sequencerErrorIndex = errorCallText.match(
-      /Error message: multicall (\d+) failed/,
+      /Error message: multicall (\d+).*failed/,
     )?.[1]
     if (sequencerErrorIndex) {
       return Number(sequencerErrorIndex)
